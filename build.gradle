@@ -1,0 +1,49 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.6.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group = 'com.RestFul.capgemini.demo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+ext {
+	set('springCloudVersion', "2022.0.0")
+	mapstructVersion = "1.5.0.Beta2"
+}
+
+dependencies {
+	implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.16.0' 
+	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.16.0'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	 implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+}
+sourceSets{
+main{
+java{
+srcDirs+='build/generated/sources/annotationProcessor/java/main'
+}
+}
+}
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
